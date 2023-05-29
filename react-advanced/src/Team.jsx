@@ -3,10 +3,13 @@
 import useFetch from './useFetch';
 
 function Teams({ color }) {
-    const teams = useFetch({
+    const { data: teams, isLoading } = useFetch({
         url: 'https://www.balldontlie.io/api/v1/teams',
         initialState: [],
     });
+
+    if (isLoading) return 'Loading...';
+    
     return (
         <>
             <h2>Teams</h2>

@@ -3,11 +3,11 @@
 import useFetch from './useFetch';
 
 function Players({ backgroundColor }) {
-    const players = useFetch({
+    const { data: players, isLoading } = useFetch({
         url: 'https://www.balldontlie.io/api/v1/players',
         initialState: [],
     });
-
+    if (isLoading) return 'Loading...';
     return (
         <>
             <h2>Players</h2>
