@@ -1,22 +1,23 @@
 /* eslint-disable react/prop-types */
 
-import FetchData from './FetchData';
+import useFetch from './useFetch';
 
 function Players({ backgroundColor }) {
+    const players = useFetch({
+        url: 'https://www.balldontlie.io/api/v1/players',
+        initialState: [],
+    });
+
     return (
         <>
             <h2>Players</h2>
-            <FetchData url='https://www.balldontlie.io/api/v1/players'>
-                {(players) => (
-                    <ul style={{ backgroundColor }}>
-                        {players.map((player) => (
-                            <li key={player.id}>
-                                {player.first_name} {player.last_name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </FetchData>
+            <ul style={{ backgroundColor }}>
+                {players.map((player) => (
+                    <li key={player.id}>
+                        {player.first_name} {player.last_name}
+                    </li>
+                ))}
+            </ul>
         </>
     );
 }
