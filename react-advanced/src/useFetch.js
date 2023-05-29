@@ -13,8 +13,8 @@ function useFetch({ url, initialState }) {
         fetch(url)
             .then((response) => response.json())
             .then((results) => setData(results.data))
-            .catch((error) => setError(error))
-            .finally(() => isLoadingOff());
+            .catch(setError)
+            .finally(isLoadingOff);
     }, [url, isLoadingOff, isLoadingOn]);
 
     return { data, isLoading, error };
