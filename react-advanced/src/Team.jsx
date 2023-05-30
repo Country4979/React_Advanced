@@ -1,23 +1,25 @@
 /* eslint-disable react/prop-types */
 
-import FetchData from './FetchData';
+import withData from './withData';
+import withPropName from './withPropName';
 
-
-function Teams({ color }) {
+function Teams({ teams, color }) {
     return (
         <>
             <h2>Teams</h2>
-            <FetchData url='https://www.balldontlie.io/api/v1/teams'>
-                {(teams) => (
-                    <ul style={{ color }}>
-                        {teams.map((team) => (
-                            <li key={team.id}>{team.full_name}</li>
-                        ))}
-                    </ul>
-                )}
-            </FetchData>
+            <ul style={{ color }}>
+                {teams.map((team) => (
+                    <li key={team.id}>{team.full_name}</li>
+                ))}
+            </ul>
         </>
     );
 }
+const configureWithPropName = withPropName('teams');
 
-export default Teams;
+const configuredWithData = withData({
+    url: 'https://www.balldontlie.io/api/v1/teams',
+});
+const TeamsWithData = configuredWithData(configureWithPropName(Teams));
+
+export default TeamsWithData;

@@ -1,24 +1,27 @@
 /* eslint-disable react/prop-types */
 
-import FetchData from './FetchData';
+import withData from './withData';
+import withPropName from './withPropName';
 
-function Players({ backgroundColor }) {
+function Players({ players, backgroundColor }) {
     return (
         <>
             <h2>Players</h2>
-            <FetchData url='https://www.balldontlie.io/api/v1/players'>
-                {(players) => (
-                    <ul style={{ backgroundColor }}>
-                        {players.map((player) => (
-                            <li key={player.id}>
-                                {player.first_name} {player.last_name}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </FetchData>
+            <ul style={{ backgroundColor }}>
+                {players.map((player) => (
+                    <li key={player.id}>
+                        {player.first_name} {player.last_name}
+                    </li>
+                ))}
+            </ul>
         </>
     );
 }
+const configureWithPropName = withPropName('players');
 
-export default Players;
+const configuredWithData = withData({
+    url: 'https://www.balldontlie.io/api/v1/players',
+});
+const PlayersWithData = configuredWithData(configureWithPropName(Players)); // nuevo componente creado por withData
+
+export default PlayersWithData;
